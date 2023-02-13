@@ -1,0 +1,116 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ka_uts"
+description = "Special Utilities"
+license = {file = "LICENSE.txt"}
+requires-python = ">=3.10"
+dynamic = ["classifiers", "version", "dependencies"]
+readme = "README.md"
+authors = [
+    {name = "Bernd Stroehle", email = "bernd.stroehle@bs29.com"}
+]
+maintainers = [
+    {name = "Bernd Stroehle", email = "bernd.stroehle@bs29.com"}
+]
+
+[project.urls]
+"Source Code" = "https://github.com/bs29/ka_uts/tree/master"
+"Homepage" = "https://kosakya.de/"
+"Documentation" = "https://ka-apc.readthedocs.io/en/latest"
+# "Documentation" = "https://bs29.atlassian.net/wiki/spaces/SD/pages/164074/ka+apc"
+# "Bug Tracker" = "https://kosakya.de/issues"
+# "Changelog" = "https://kosakya.de/ka_uts/blob/master/CHANGELOG.md"
+"Apache-2.0 License" = "https://apache.org/licenses/LICENSE-2.0"
+# "GPLv3 License" = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = true
+
+# [tool.setuptools.packages]
+# find = {namespaces = true}
+# namespace_packages = ka_uts
+
+[tool.setuptools.package-data]
+"*" = ["*.*"]
+
+[tool.setuptools.packages.find]
+# where = ["."]  # list of folders that contain the packages (["."] by default)
+# include = ["ka_uts*"]  # package names should match these glob patterns (["*"] by default)
+exclude = [
+    "*.tests*",
+    "__pycache__*"]  # exclude packages matching these glob patterns (empty by default)
+namespaces = true  # to disable scanning PEP 420 namespaces (true by default)
+
+[tool.setuptools.dynamic]
+version = {attr = "ka_uts.__version__.__version__"}
+readme = {file = "README.md"}
+dependencies = {file = ["requirements.txt"]}
+classifiers = {file = ["classifiers.txt"]}
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+# 'extend-exclude' excludes files or directories in addition to the defaults
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+force-exclude = '''
+(
+    __pycache__*
+)
+'''
+
+[tool.ruff]
+exclude = [
+    ".git",
+    "__pycache__",
+    'node_modules',
+]
+per-file-ignores = {"__init__.py" = ["F403"]}
+# select = ["E", "F", "RUF", "UP", "W"]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    # "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    'E401', # Multiple imports on one line
+    'E402', # Module level import not at top of file
+    'E501', # Never enforce line length violations
+    'E731', # Do not assign a lambda expression, use a def
+    'E741', # Ambiguous variable name: I
+    'E741', # Ambiguous variable name: I
+    'RUF001',
+    'RUF005',
+]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.pyupgrade]
+keep-runtime-typing = true
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+ignore_missing_imports = true
+
+[tool.pydocstyle]
+inherit = false
+add_ignore = "D100,D104,D105,D107,D205,D400,D401"
+convention = "pep257"
+
+[tool.sphinx-pyproject]
+github_username = "ka_uts"
+github_repository = "ka_uts"
+author = "Bernd Stroehle"
+project = "sphinx-pyproject"
+copyright = "2021-2023 Bernd Stroehle"
+language = "en"
+package_root = "ka_uts"

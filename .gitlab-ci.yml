@@ -1,0 +1,8 @@
+image: python:latest
+
+test:
+  script:
+    - python -V
+    - pip install .
+    - pip install pytest-cov
+    - pytest ea_gut/ --cov=ea_gut --cov-report term-missing

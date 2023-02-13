@@ -1,0 +1,16 @@
+include MANIFEST.in
+include LICENSE.txt
+include README.md
+include setup.cfg
+include requirements.txt
+
+recursive-include * *.txt
+recursive-include * *.in
+recursive-include * *.md
+
+recursive-exclude * __pycache__
+recursive-exclude * *.pyc
+recursive-exclude * *.pyo
+recursive-exclude * *.orig
+
+prune __pycache__*

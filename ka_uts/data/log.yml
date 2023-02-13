@@ -1,0 +1,93 @@
+version: 1
+
+disable_existing_loggers: False
+
+root:
+    level: DEBUG
+    handlers:
+        - debug_console
+        - debug_file
+
+loggers:
+
+    # main logger
+    main:
+        level: 'NOTSET'
+        handlers:
+            - debug_console
+            - debug_file
+            - info_file
+            - error_file
+
+    # person logger
+    person:
+        level: NOTSET
+        handlers:
+            - debug_console
+            - debug_file
+            - info_file
+            - error_file
+
+handlers:
+
+    debug_console:
+        class: 'logging.StreamHandler'
+        level: DEBUG
+        formatter: debug
+        stream: 'ext://sys.stderr'
+
+    debug_file:
+        class: 'logging.FileHandler'
+        level: DEBUG
+        formatter: error
+        filename: 'debug.log'
+        mode: 'a'
+
+#   info_rotating_file_handler:
+#       class: 'logging.handlers.RotatingFileHandler'
+#       level: INFO
+#       formatter: info
+#       filename: 'info.rotating.log'
+#       mode: 'a'
+#       maxBytes: 1048576  # 1MB
+#       backupCount: 10
+#       encoding: utf8
+
+    info_file:
+        class: 'logging.FileHandler'
+        level: INFO
+        formatter: info
+        filename: 'info.log'
+        mode: 'a'
+
+    error_file:
+        class: 'logging.FileHandler'
+        level: ERROR
+        formatter: error
+        filename: 'error.log'
+        mode: 'a'
+
+    critical_mail:
+        class: 'logging.handlers.SMTPHandler'
+        level: CRITICAL
+        formatter: critical
+        mailhost : localhost
+        fromaddr: 'monitoring@domain.com'
+        toaddrs:
+            - 'dev@domain.com'
+            - 'qa@domain.com'
+        subject: 'Critical error with application name'
+
+formatters:
+
+    info:
+        format: '%(asctime)s-%(levelname)s-%(name)s::%(module)s|%(lineno)s:: %(message)s'
+    debug:
+        format: '%(asctime)-15s %(levelname)s-%(name)s-%(process)d::%(module)s.%(funcName)s|%(lineno)s:: %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+    error:
+        format: '%(asctime)-15s %(levelname)s-%(name)s-%(process)d::%(module)s.%(funcName)s|%(lineno)s:: %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+    critical:
+        format: '%(asctime)-15s %(levelname)s-%(name)s-%(process)d::%(module)s.%(funcName)s|%(lineno)s:: %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
